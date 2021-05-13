@@ -1,0 +1,32 @@
+version: "3.3"
+
+networks:
+  devnet:
+    ipam:
+      driver: default
+      config:
+        - subnet: "172.18.0.0/16"
+
+services:
+  dns:
+    build: 
+      context: .
+      dockerfile: Dockerfile.dns
+    hostname: "ns.murilo.dev666"
+    networks:
+      devnet:
+        ipv4_address: 172.18.0.10
+    volumes:
+      - "./volumes/dns/:/data/"
+      - "./volumes/mail/:/var/mail/"
+      - "./volumes/apache2/sites-enabled/:/etc/apache2/sites-enabled/"
+      - "./scripts/init.sh:/init.sh"
+    restart: always
+    ports:
+      - "53:53/tcp"
+      - "53:53/udp"
+      - "10000:10000/tcp"
+      - "8000:80"
+      - "143:143"
+      - "587:587"
+      - "993:993"

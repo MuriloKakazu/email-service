@@ -1,0 +1,12 @@
+$ttl 38400
+murilo.dev666.	IN	SOA	172.18.0.10. yuri\.kakazu.gmail.com. (
+			1620804040
+			10800
+			3600
+			604800
+			38400 )
+murilo.dev666.	IN	NS	172.18.0.10.
+webserver.murilo.dev666.	IN	A	192.168.1.1
+www.murilo.dev666.	IN	CNAME	webserver
+murilo.dev666.	IN	A	172.18.0.10.
+murilo.dev666.	IN	MX	10 172.18.0.10

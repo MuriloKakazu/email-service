@@ -1,0 +1,37 @@
+FROM sameersbn/bind:latest
+
+RUN apt-get update
+
+RUN echo "postfix postfix/main_mailer_type string 'Internet Site'" | debconf-set-selections
+RUN echo "postfix postfix/mailname string murilo.dev666" | debconf-set-selections
+RUN DEBIAN_FRONTEND=noninteractive apt-get install -y postfix
+
+RUN postconf -e myhostname=murilo.dev666
+RUN postconf -e mydestination="murilo.dev666, ns.murilo.dev666, localhost.murilo.dev666, localhost"
+RUN postconf -e mail_spool_directory="/var/mail/"
+RUN postconf -e mailbox_command=""
+
+RUN apt-get install -y telnet
+RUN apt-get install -y bsd-mailx 
+RUN apt-get install -y net-tools
+
+RUN mkdir /var/mail/aluno1 && \
+    mkdir /var/mail/aluno2 && \
+    mkdir /var/mail/aluno3
+
+RUN chmod 660 /var/mail/aluno1 && \
+    chmod 660 /var/mail/aluno2 && \
+    chmod 660 /var/mail/aluno3
+
+RUN useradd -m -p $(perl -e 'print crypt("123", "salt"),"\n"') aluno1
+RUN useradd -m -p $(perl -e 'print crypt("123", "salt"),"\n"') aluno2
+RUN useradd -m -p $(perl -e 'print crypt("123", "salt"),"\n"') aluno3
+
+RUN chown aluno1:mail /var/mail/aluno1
+RUN chown aluno2:mail /var/mail/aluno2
+RUN chown aluno3:mail /var/mail/aluno3
+
+RUN apt-get install -y vim
+RUN apt-get install -y dovecot-core dovecot-imapd dovecot-pop3d dovecot-lmtpd
+
+RUN DEBIAN_FRONTEND=noninteractive apt install -y roundcube

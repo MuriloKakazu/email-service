@@ -1,0 +1,8 @@
+$ttl 38400
+10.0.18.172.in-addr.arpa.	IN	SOA	ns.murilo.dev666. yuri\.kakazu.gmail.com. (
+			1620804335
+			10800
+			3600
+			604800
+			38400 )
+10.0.18.172.in-addr.arpa.	IN	NS	ns.murilo.dev666.
